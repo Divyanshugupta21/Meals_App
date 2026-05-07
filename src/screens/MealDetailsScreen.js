@@ -1,16 +1,31 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { Image, StyleSheet, Text, View, ScrollView, Button } from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealInfo from "../components/MealInfo";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import IconButton from "../components/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, removeFavorite } from "../../store/redux/favoritesReducer";
+// import { FavoritesContext } from "../../store/context/favoritesContext";
 
 function MealDetailsScreen({ route, navigation }) {
-    const { mealId } = route.params;
+    // const favoriteMealsCtx = useContext(FavoritesContext);
+    const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+    const dispatch = useDispatch();
 
-    const handleButtonPress = () => {
-        alert('Button tapped!');
+    const { mealId } = route.params;
+    // const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+    const mealIsFavorite = favoriteMealIds.includes(mealId);
+
+    const favoriteStatusHandler = () => {
+        if (mealIsFavorite) {
+            // favoriteMealsCtx.removeFavorite(mealId);
+            dispatch(removeFavorite({ id: mealId }));
+        } else {
+            // favoriteMealsCtx.addFavorite(mealId);
+            dispatch(addFavorite({ id: mealId }));
+        }
     }
 
     useLayoutEffect(() => {
@@ -18,11 +33,15 @@ function MealDetailsScreen({ route, navigation }) {
             title: 'Meal Details',
             headerRight: () => {
                 return (
-                    <IconButton icon='star' title='Tap me!' onPress={handleButtonPress} />
+                    <IconButton 
+                        icon={mealIsFavorite ? 'star' : 'star-outline'}
+                        title='Tap me!' 
+                        onPress={favoriteStatusHandler} 
+                    />
                 );
             },
         });
-    }, [navigation]);
+    }, [navigation, favoriteStatusHandler]);
 
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
     const { title, imageUrl, duration, complexity, affordability, ingredients, steps } = selectedMeal;
