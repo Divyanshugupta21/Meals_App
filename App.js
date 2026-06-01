@@ -11,7 +11,7 @@ import CategoriesScreen from './src/screens/CategoriesScreen';
 import MealsOverviewScreen from './src/screens/MealsOverviewScreen';
 import MealDetailsScreen from './src/screens/MealDetailsScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
-// import FavoritesContextProvider from './store/context/favoritesContext';
+// import FavoritesContextProvider from './src/store/context/favoritesContext';
 import store from './store/redux/store';
 
 const Stack = createNativeStackNavigator();

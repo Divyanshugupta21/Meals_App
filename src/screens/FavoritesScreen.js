@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
 import Mealslist from '../components/MealsList/MealsList';
-// import { FavoritesContext } from '../../store/context/favoritesContext';
+// import { FavoritesContext } from '../store/context/favoritesContext';
 import { MEALS } from '../data/dummy-data';
 const FavoritesScreen = () => {
     // const favoriteMealsCtx = useContext(FavoritesContext);
